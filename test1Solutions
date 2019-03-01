@@ -1,0 +1,203 @@
+using System;
+
+namespace Test1_Questions
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {   // new DogHouse().run();        
+            //var b = new Building();
+            //b.run();
+            //Console.WriteLine(" Shoes are on Floor : {0}",  b.Search("Shoes"));
+
+            new Section3().run();
+            //var Caf = new Cafeteria();
+            //Caf.BuildTheTree();
+            //Console.WriteLine("Total Calories are {0} ", Caf.CountCalories());
+            //new WaitingAround().Run();
+        }
+    }
+
+    class DogHouse
+    {
+        Dog D1, D2, D3, D4, Temp;
+        Dog[] Dogs = new Dog[5];
+        string[] DogNames = new string[] { "Peanut", "Fifi", "Fido", "Clarence", "Bigi" };
+
+        public void run()
+        {
+            for (int i = 0; i < Dogs.Length; i++)
+            {
+                Dogs[i] = new Dog();
+                Dogs[i].DogName = DogNames[i];
+            }
+            D1 = Dogs[3];
+            D3 = Dogs[1];
+            D4 = Dogs[0];
+            Temp = D1;
+            D1 = D3;
+            D2 = Temp;
+
+            Console.WriteLine(D1.DogName);
+            Console.WriteLine(D2.DogName);
+            Console.WriteLine(D3.DogName);
+            Console.WriteLine(D4.DogName);
+            Console.WriteLine(Temp.DogName);
+        }
+    }
+
+    class Dog
+    {
+        public string DogName;
+    }
+
+    class Building
+    {
+        Floors FirstFloor;
+        // Floors[] Floor= new Floors[10];
+
+        public void run()
+        {
+            FirstFloor = new Floors();
+            FirstFloor.Departments[0] = "Toys";
+            FirstFloor.Departments[1] = "Tools";
+            FirstFloor.Departments[2] = "Shoes";
+            FirstFloor.Departments[3] = "Housewares";
+        }
+
+        public int Search(string searchString)
+        {
+            int departmentNumber = -1;
+            // foreach does not directly tell us the Floor Number!!!
+            //foreach (string item in FirstFloor.Departments )
+            //{
+            //    if (item == searchString)
+            //    {
+
+            //    }
+            //}
+
+            for ( ; departmentNumber < FirstFloor.Departments.Length;  )
+            {
+                if (FirstFloor.Departments[++departmentNumber] == searchString) { break; }
+            }
+
+            return departmentNumber;
+        }
+    }
+
+    class Floors
+    {
+        public string[] Departments = new string[4];
+    }
+
+    class   Section3
+    {
+        int a, b, c = 0;
+
+        public void run()
+        {
+            //for (b=6 ; this.MethodA() ; c = a-b)
+            //{
+            //    a++;
+            //    Console.WriteLine("{0} -- {1} -- {2}", a, b, c);
+            //}
+
+            while (this.MethodA())
+                {
+                int b = 6;
+                c = a - b;
+                Console.WriteLine("{0} -- {1} -- {2}", a++, b, c);
+                }
+
+        }
+
+        public bool MethodA()
+        {
+            if (a > 5) { return false; } else { return true; }
+        }
+    }
+
+    
+    class Cafeteria
+        {
+          FoodItem Head, Tail, Soup, Fish, Desert, Samosa, next, prev;
+
+          public void BuildTheTree()
+            {
+            
+            Soup = new FoodItem("soup", 150);
+            Samosa = new FoodItem("samosa", 235);
+            Fish = new FoodItem("fish", 175);
+            Desert = new FoodItem("cake", 200);
+            Head = Soup;
+            Soup.prev_food = null;
+            Soup.next_food = Samosa;
+
+            Samosa.prev_food = Soup;
+            Samosa.next_food = Fish;
+
+            Fish.prev_food = Samosa;
+            Fish.next_food = Desert;
+
+            Desert.prev_food = Fish;
+            Desert.next_food = null;
+           }
+
+            public int CountCalories()
+            {
+                FoodItem CurrentFood = Head;
+                int calories = 0;
+                while (true)
+                    {
+                        calories += CurrentFood.calories;
+                        CurrentFood = CurrentFood.next_food;
+                        if (CurrentFood.next_food == null) {
+                        // NOTE how I am handling the Boundary, or "Edge" condition at the end of the 
+                        // walk over the Linked List:
+                                calories += CurrentFood.calories;
+                                break; }
+                        }
+                        return calories;
+            }
+
+        }
+
+    class FoodItem
+        {
+            public FoodItem(string name, int _cals)
+            {
+                food_description = name;
+                calories = _cals;
+            }
+            public FoodItem next_food;
+            public FoodItem prev_food;
+
+            public string food_description;
+            public int calories;
+        }
+
+    class WaitingAround
+    {
+        int NumberOfCowsStillOut = 10;
+        public void Run()
+        {
+            int cowsAtHome = 0;
+            while (theCowsAreNotHomeYet())
+            {
+                cowsAtHome++; 
+                Console.WriteLine("Number of cows that have come home: {0} ", cowsAtHome);
+            }
+
+        }
+
+        public bool theCowsAreNotHomeYet()
+        {
+            if (NumberOfCowsStillOut-- == 0) {
+                Console.WriteLine("All the cows are home now! Feeling HAPPY!!!");
+                return false; }
+            return true;
+        }
+    }
+
+}
